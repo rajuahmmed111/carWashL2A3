@@ -27,5 +27,3 @@ const serviceSchema = new Schema({
 });
 
 export const Service = model<TService>('Service', serviceSchema);
-
-module.exports = Service;
