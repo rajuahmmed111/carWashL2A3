@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { Server } from 'http';
 import mongoose from 'mongoose';
 import app from './app';
 import config from './app/config';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let server: Server;
 
 async function main() {
@@ -19,17 +21,17 @@ async function main() {
 
 main();
 
-// process.on("unhandledRejection", () => {
-//   console.log(`unhandledRejection is rejection detected, shutting down....`);
-//   if (server) {
-//     server.close(() => {
-//       process.exit(1);
-//     });
-//   }
-//   process.exit(1);
-// });
+process.on('unhandledRejection', () => {
+  console.log(`unhandledRejection is rejection detected, shutting down....`);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
 
-// process.on("uncaughtException", () => {
-//   console.log(`uncaughtException is rejection detected, shutting down....`);
-//   process.exit(1);
-// });
+process.on('uncaughtException', () => {
+  console.log(`uncaughtException is rejection detected, shutting down....`);
+  process.exit(1);
+});
