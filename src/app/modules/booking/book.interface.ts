@@ -16,7 +16,7 @@ export type TVehicleType = {
 export type TBooking = {
   customer?: Types.ObjectId;
   serviceId: Types.ObjectId;
-  // slotId: Types.ObjectId;
+  slotId: Types.ObjectId;
   vehicleType: TVehicleType;
   vehicleBrand: string;
   vehicleModel: string;

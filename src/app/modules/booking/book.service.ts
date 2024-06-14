@@ -70,22 +70,21 @@ const getMyBooking = async (emailId: any) => {
   const user = await User.findOne({ email: emailId });
 
   const userId = user?._id.toString();
-  console.log(userId, 'bookings from service');
 
   const myBookings = await Booking.find({ customer: userId }).populate([
     'service',
   ]);
 
-  const sanitizedBookings = myBookings.map((booking) => {
+  const filterBookings = myBookings.map((booking) => {
     const bookingObject = booking.toObject();
     delete bookingObject?.customer;
     return bookingObject;
   });
 
-  if (!sanitizedBookings) {
+  if (!filterBookings) {
     throw new AppError(httpStatus.NOT_FOUND, 'My Bookings is not found !');
   }
-  return sanitizedBookings;
+  return filterBookings;
 };
 
 export const BookingServices = {

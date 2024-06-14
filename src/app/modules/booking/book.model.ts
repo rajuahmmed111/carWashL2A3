@@ -11,11 +11,11 @@ const bookingSchema = new Schema({
     ref: 'Service',
     required: true,
   },
-  // slot: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Slot',
-  //   required: true,
-  // },
+  slot: {
+    type: Schema.Types.ObjectId,
+    ref: 'Slot',
+    required: true,
+  },
   vehicleType: {
     type: String,
     enum: vehicleTypes,

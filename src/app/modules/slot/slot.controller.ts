@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { TSlotQueryParams } from './slot.interface';
 import { SlotServices } from './slot.service';
 
 const createSlot = catchAsync(async (req, res) => {
@@ -15,34 +16,34 @@ const createSlot = catchAsync(async (req, res) => {
   });
 });
 
-// const availableSlot = catchAsync(async (req, res) => {
-//   const { date, serviceId } = req.query;
+const availableSlot = catchAsync(async (req, res) => {
+  const { date, serviceId } = req.query;
 
-//   const queryParams: TSlotQueryParams = {
-//     date: date as string,
-//     serviceId: serviceId as string,
-//   };
+  const queryParams: TSlotQueryParams = {
+    date: date as string,
+    serviceId: serviceId as string,
+  };
 
-//   const result = await SlotServices.availableSlots(queryParams);
+  const result = await SlotServices.availableSlot(queryParams);
 
-//   if (result.length === 0) {
-//     sendResponse(res, {
-//       statusCode: httpStatus.NOT_FOUND,
-//       success: false,
-//       message: 'No Data Found',
-//       data: result,
-//     });
-//   }
+  if (result.length === 0) {
+    sendResponse(res, {
+      statusCode: httpStatus.NOT_FOUND,
+      success: false,
+      message: 'No Data Found',
+      data: result,
+    });
+  }
 
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: 'Available slots retrieved successfully',
-//     data: result,
-//   });
-// });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Available slots retrieved successfully',
+    data: result,
+  });
+});
 
 export const SlotControllers = {
   createSlot,
-  //   availableSlot,
+  availableSlot,
 };

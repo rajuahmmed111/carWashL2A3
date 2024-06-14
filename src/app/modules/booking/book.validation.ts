@@ -6,11 +6,9 @@ const bookingValidationSchema = z.object({
     serviceId: z.string().refine((value) => /^[a-fA-F0-9]{24}$/.test(value), {
       message: 'Invalid ObjectId for service',
     }),
-    // slotId: z
-    //   .string()
-    //   .refine((value) => /^[a-fA-F0-9]{24}$/.test(value), {
-    //     message: 'Invalid ObjectId for slot',
-    //   }),
+    slotId: z.string().refine((value) => /^[a-fA-F0-9]{24}$/.test(value), {
+      message: 'Invalid ObjectId for slot',
+    }),
     vehicleType: z.enum(vehicleTypes),
     vehicleBrand: z.string().min(1, { message: 'Vehicle brand is required' }),
     vehicleModel: z.string().min(1, { message: 'Vehicle model is required' }),

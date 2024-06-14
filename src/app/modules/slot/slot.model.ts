@@ -21,7 +21,7 @@ const bookingSchema = new Schema<TSlot>(
       required: true,
     },
     isBooked: {
-      type: Boolean,
+      type: String,
       required: true,
     },
   },

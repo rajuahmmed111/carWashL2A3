@@ -30,7 +30,6 @@ const getMyBooking = catchAsync(async (req, res) => {
   const { emailId } = req.user;
 
   const bookings = await BookingServices.getMyBooking(emailId);
-  console.log(bookings, 'from controller');
 
   // const filter = bookings.map(
   //   ({ customer, ...bookingWithoutCustomer }) => bookingWithoutCustomer,
