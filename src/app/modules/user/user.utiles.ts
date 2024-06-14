@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export const cerateToken = (
-  jwtPayload: { userId: string; role: string },
+  jwtPayload: { emailId: string; role: string },
   secret: string,
   expiresIn: string,
 ) => {

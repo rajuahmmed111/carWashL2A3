@@ -1,9 +1,12 @@
-import { Types } from 'mongoose';
-
-export type Booking = {
-  service: Types.ObjectId;
+export type TSlot = {
+  service: string;
   date: string;
   startTime: string;
   endTime: string;
-  isBooked: boolean;
+  isBooked?: 'available' | 'booked' | 'canceled';
 };
+
+export interface TSlotQueryParams {
+  date?: string;
+  serviceId?: string;
+}

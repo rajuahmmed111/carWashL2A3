@@ -29,7 +29,7 @@ const loginUser = async (payload: TUser) => {
   // Access Granted: send access token and refresh token
   // create token and send client side
   const jwtPayload = {
-    userId: user.email,
+    emailId: user.email,
     role: user.role,
   };
 
@@ -60,16 +60,16 @@ const refreshToken = async (token: string) => {
   ) as JwtPayload;
 
   // check if the token is valid
-  const { userId } = decoded;
+  const { emailId } = decoded;
 
-  const isUserExists = await User.isUserExists(userId);
+  const isUserExists = await User.isUserExists(emailId);
 
   if (!isUserExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'This User is not found !');
   }
 
   const jwtPayload = {
-    userId: isUserExists.email,
+    emailId: isUserExists.email,
     role: isUserExists.role,
   };
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
@@ -24,7 +26,25 @@ const getAllBooking = catchAsync(async (req, res) => {
   });
 });
 
+const getMyBooking = catchAsync(async (req, res) => {
+  const { emailId } = req.user;
+
+  const bookings = await BookingServices.getMyBooking(emailId);
+  console.log(bookings, 'from controller');
+
+  // const filter = bookings.map(
+  //   ({ customer, ...bookingWithoutCustomer }) => bookingWithoutCustomer,
+  // );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User bookings retrieved successfully',
+    data: bookings,
+  });
+});
+
 export const BookingControllers = {
   createBooking,
   getAllBooking,
+  getMyBooking,
 };
