@@ -25,7 +25,7 @@ const getSingleServiceById = async (id: string) => {
 const getAllService = async (payLoad: TService) => {
   const services = await Service.find(payLoad);
   if (!services) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This Services are  not found !');
+    throw new AppError(httpStatus.NOT_FOUND, 'Services are  not found !');
   }
 
   return services;

@@ -1,0 +1,71 @@
+import httpStatus from 'http-status';
+import { JwtPayload } from 'jsonwebtoken';
+import AppError from '../../Error/Apperror';
+import { Service } from '../serviceM/service.model';
+import { User } from '../user/user.model';
+import { TBooking } from './book.interface';
+import { Booking } from './book.model';
+
+const createBooking = async (userData: JwtPayload, payload: TBooking) => {
+  const {
+    serviceId,
+    // slotId,
+    vehicleType,
+    vehicleBrand,
+    vehicleModel,
+    manufacturingYear,
+    registrationPlate,
+  } = payload;
+
+  const isCustomer = await User.findOne(userData.email).select([
+    '_id',
+    'name',
+    'email',
+    'phone',
+    'address',
+  ]);
+  const customerId = isCustomer?._id;
+
+  if (!customerId) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Customer not found !');
+  }
+
+  const isServiceExits = await Service.findById(serviceId);
+  if (!isServiceExits) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Services not found !');
+  }
+
+  // const isSlotExits = await Slot.findById(slotId);
+  // if (!isSlotExits) {
+  //   throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
+  // }
+
+  const bookingData = {
+    customer: customerId,
+    service: isServiceExits,
+    // slot: isSlotExits,
+    vehicleType,
+    vehicleBrand,
+    vehicleModel,
+    manufacturingYear,
+    registrationPlate,
+  };
+
+  //
+  const result = (await Booking.create(bookingData)).populate('customer');
+  return result;
+};
+
+const getAllBooking = async () => {
+  const books = await Booking.find().populate('customer').populate('service');
+  if (!books) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Bookings is not found !');
+  }
+
+  return books;
+};
+
+export const BookingServices = {
+  createBooking,
+  getAllBooking,
+};
