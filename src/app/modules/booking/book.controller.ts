@@ -31,9 +31,6 @@ const getMyBooking = catchAsync(async (req, res) => {
 
   const bookings = await BookingServices.getMyBooking(emailId);
 
-  // const filter = bookings.map(
-  //   ({ customer, ...bookingWithoutCustomer }) => bookingWithoutCustomer,
-  // );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

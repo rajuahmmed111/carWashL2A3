@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
 import AppError from '../../Error/Apperror';
 import { Service } from '../serviceM/service.model';
+import { Slot } from '../slot/slot.model';
 import { User } from '../user/user.model';
 import { TBooking } from './book.interface';
 import { Booking } from './book.model';
@@ -9,7 +10,7 @@ import { Booking } from './book.model';
 const createBooking = async (userData: JwtPayload, payload: TBooking) => {
   const {
     serviceId,
-    // slotId,
+    slotId,
     vehicleType,
     vehicleBrand,
     vehicleModel,
@@ -34,16 +35,17 @@ const createBooking = async (userData: JwtPayload, payload: TBooking) => {
   if (!isServiceExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'Services not found !');
   }
+  console.log(isServiceExits);
 
-  // const isSlotExits = await Slot.findById(slotId);
-  // if (!isSlotExits) {
-  //   throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
-  // }
+  const isSlotExits = await Slot.findById(slotId);
+  if (!isSlotExits) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Slot not found !');
+  }
 
   const bookingData = {
     customer: customerId,
     service: isServiceExits,
-    // slot: isSlotExits,
+    slot: isSlotExits,
     vehicleType,
     vehicleBrand,
     vehicleModel,
@@ -52,7 +54,7 @@ const createBooking = async (userData: JwtPayload, payload: TBooking) => {
   };
 
   //
-  const result = (await Booking.create(bookingData)).populate('customer');
+  const result = (await Booking.create(bookingData)).populate(['customer']);
   return result;
 };
 
