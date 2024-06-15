@@ -22,11 +22,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
       token,
       config.jwt_access_token as string,
     ) as JwtPayload;
-    // console.log(decoded);
 
     // check if the token is valid
     const { role, emailId } = decoded;
-    // console.log(emailId, 'auth');
 
     const isUserExists = await User.isUserExists(emailId);
 
@@ -38,7 +36,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
     }
-    // decoded undefined
+    // decoded
     req.user = decoded as JwtPayload;
     next();
   });

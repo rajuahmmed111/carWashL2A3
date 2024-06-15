@@ -7,7 +7,7 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
   // Extract the Message if found
   const extractedMessage = match && match[1];
 
-  const errorSources: TErrorSources = [
+  const errorMessages: TErrorSources = [
     {
       path: '',
       message: `${extractedMessage} is already exist !`,
@@ -19,7 +19,7 @@ const handleDuplicateError = (err: any): TGenericErrorResponse => {
   return {
     statusCode,
     message: 'Invalid ID',
-    errorSources,
+    errorMessages: errorMessages,
   };
 };
 

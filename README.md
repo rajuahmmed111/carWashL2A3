@@ -1,5 +1,15 @@
 ## Project Name: Car Washing
 
+## Project SetUp:
+
+      1. npm init -y  diyesi
+      2. app.ts create
+      3. tsc diye tsconfig.json set korsi
+      4.Express.js, Mongoose, TypeScript and others install
+      5. set eslint and prettier
+      6. gitignore korsi
+      7. last module, route, utile all complete korsi
+
 ## live UR:
 
 ## Features:

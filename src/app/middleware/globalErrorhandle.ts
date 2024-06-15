@@ -15,7 +15,7 @@ const globalMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Something went wrong';
 
-  let errorSources: TErrorSources = [
+  let errorMessages: TErrorSources = [
     {
       path: '',
       message: 'Something went wrong',
@@ -27,28 +27,28 @@ const globalMiddleware: ErrorRequestHandler = (err, req, res, next) => {
 
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorMessages = simplifiedError?.errorMessages;
   } else if (err?.name === 'ValidationError') {
     const simplifiedError = handleValidationError(err);
 
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorMessages = simplifiedError?.errorMessages;
   } else if (err?.name === 'CastError') {
     const simplifiedError = handleCastError(err);
 
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorMessages = simplifiedError?.errorMessages;
   } else if (err?.code === 11000) {
     const simplifiedError = handleDuplicateError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorMessages = simplifiedError?.errorMessages;
   } else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err?.message;
-    errorSources = [
+    errorMessages = [
       {
         path: '',
         message: err?.message,
@@ -56,7 +56,7 @@ const globalMiddleware: ErrorRequestHandler = (err, req, res, next) => {
     ];
   } else if (err instanceof Error) {
     message = err?.message;
-    errorSources = [
+    errorMessages = [
       {
         path: '',
         message: err?.message,
@@ -68,7 +68,7 @@ const globalMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   return res.status(statusCode).json({
     success: false,
     message,
-    errorSource: errorSources,
+    errorMessages: errorMessages,
     // err,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,
   });
