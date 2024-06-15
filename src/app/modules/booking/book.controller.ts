@@ -28,8 +28,8 @@ const getAllBooking = catchAsync(async (req, res) => {
 
 const getMyBooking = catchAsync(async (req, res) => {
   const { emailId } = req.user;
-
   const bookings = await BookingServices.getMyBooking(emailId);
+  console.log(bookings, 'controller');
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -26,6 +26,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     // check if the token is valid
     const { role, emailId } = decoded;
+    // console.log(emailId, 'auth');
 
     const isUserExists = await User.isUserExists(emailId);
 

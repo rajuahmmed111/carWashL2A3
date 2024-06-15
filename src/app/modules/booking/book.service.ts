@@ -25,6 +25,7 @@ const createBooking = async (userData: JwtPayload, payload: TBooking) => {
     'phone',
     'address',
   ]);
+  // console.log(isCustomer);
   const customerId = isCustomer?._id;
 
   if (!customerId) {
@@ -35,7 +36,6 @@ const createBooking = async (userData: JwtPayload, payload: TBooking) => {
   if (!isServiceExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'Services not found !');
   }
-  console.log(isServiceExits);
 
   const isSlotExits = await Slot.findById(slotId);
   if (!isSlotExits) {
@@ -59,7 +59,7 @@ const createBooking = async (userData: JwtPayload, payload: TBooking) => {
 };
 
 const getAllBooking = async () => {
-  const books = await Booking.find().populate('customer').populate('service');
+  const books = await Booking.find().populate(['customer', 'service', 'slot']);
   if (!books) {
     throw new AppError(httpStatus.NOT_FOUND, 'Bookings is not found !');
   }
@@ -67,15 +67,13 @@ const getAllBooking = async () => {
   return books;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getMyBooking = async (emailId: any) => {
+const getMyBooking = async (emailId: string) => {
   const user = await User.findOne({ email: emailId });
 
   const userId = user?._id.toString();
+  console.log(userId, 'services');
 
-  const myBookings = await Booking.find({ customer: userId }).populate([
-    'service',
-  ]);
+  const myBookings = await Booking.find({ customer: userId });
 
   const filterBookings = myBookings.map((booking) => {
     const bookingObject = booking.toObject();
