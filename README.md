@@ -10,7 +10,7 @@
       6. gitignore korsi
       7. last module, route, utile all complete korsi
 
-## live UR:
+## live UR: https://car-wash-a3.vercel.app/
 
 ## Features:
 
