@@ -71,7 +71,6 @@ const getMyBooking = async (emailId: string) => {
   const user = await User.findOne({ email: emailId });
 
   const userId = user?._id.toString();
-  console.log(userId, 'services');
 
   const myBookings = await Booking.find({ customer: userId });
 
@@ -80,6 +79,7 @@ const getMyBooking = async (emailId: string) => {
     delete bookingObject?.customer;
     return bookingObject;
   });
+  console.log(filterBookings, 'services');
 
   if (!filterBookings) {
     throw new AppError(httpStatus.NOT_FOUND, 'My Bookings is not found !');
