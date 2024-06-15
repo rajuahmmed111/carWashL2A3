@@ -79,7 +79,6 @@ const getMyBooking = async (emailId: string) => {
     delete bookingObject?.customer;
     return bookingObject;
   });
-  console.log(filterBookings, 'services');
 
   if (!filterBookings) {
     throw new AppError(httpStatus.NOT_FOUND, 'My Bookings is not found !');
